@@ -3,14 +3,17 @@ import React from "react";
 function Learner({ name }) {
   const lmsCheck = () => {
     if (name === "null") {
-      return "Uh oh! It seems like we couldn't find your real name!";
+      return "Oops! Il semble que votre nom ne soit pas enregistré dans le LMS.";
     }
     return "";
   };
 
   return (
     <div>
-      <p>Hi, {name}!</p>
+      <p tabIndex="0" aria-label={`Bonjour, ${name}!`}>
+        Hi, {name}!
+      </p>
+
       <p>{lmsCheck()}</p>
     </div>
   );

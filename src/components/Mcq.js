@@ -1,12 +1,18 @@
-import React, { useState, useCallback } from "react";
+import React, { useState } from "react";
 
 function Mcq({ question, answers, correctAnswer, result }) {
   const [selectedOption, setSelectedOption] = useState(0);
   const [answered, setAnswered] = useState(false);
 
-  const handleOptionChange = useCallback((changeEvent) => {
+  const handleOptionChange = (changeEvent) => {
     setSelectedOption(Number(changeEvent.target.value));
-  }, []);
+  };
+
+  const handleFormSubmit = (formSubmitEvent) => {
+    formSubmitEvent.preventDefault();
+    setAnswered(true);
+    result(selectedOption === correctAnswer, answers[selectedOption]);
+  };
 
   const renderAnswers = () => {
     return answers.map((answer, index) => (
@@ -16,48 +22,41 @@ function Mcq({ question, answers, correctAnswer, result }) {
           value={index}
           checked={selectedOption === index}
           onChange={handleOptionChange}
+          aria-label={`radio de sélection numéro ${
+            index + 1
+          } qui sélectionne la réponse ${answer}`}
+          tabIndex="0"
         />
-        <label>{answer}</label>
+        <label tabIndex="0">{answer}</label>
       </div>
     ));
   };
 
-  const handleFormSubmit = useCallback(
-    (formSubmitEvent) => {
-      formSubmitEvent.preventDefault();
-      setAnswered(true);
-      result(selectedOption === correctAnswer, answers[selectedOption]);
-    },
-    [selectedOption, correctAnswer, answers, result]
-  );
-
   const checkCorrectAnswer = () => {
     if (selectedOption === correctAnswer) {
-      return `yes, ${answers[correctAnswer]} is the correct answer.`;
+      return `Yes, ${answers[correctAnswer]} est la bonne réponse.`;
     } else {
-      return `You answered ${answers[selectedOption]}. Sorry, but the correct answer is ${answers[correctAnswer]}.`;
-    }
-  };
-
-  const currentState = () => {
-    if (!answered) {
-      return (
-        <form onSubmit={handleFormSubmit}>
-          {renderAnswers()}
-          <button className="btn btn-default" type="submit">
-            Submit
-          </button>
-        </form>
-      );
-    } else {
-      return <div>{checkCorrectAnswer()}</div>;
+      return `Vous avez répondu ${answers[selectedOption]}. Pardon, la bonne réponse est ${answers[correctAnswer]}.`;
     }
   };
 
   return (
     <div className="Mcq">
-      <p>{question}</p>
-      {currentState()}
+      <p tabIndex="0">{question}</p>
+      {!answered ? (
+        <form onSubmit={handleFormSubmit}>
+          {renderAnswers()}
+          <button
+            type="submit"
+            aria-label="bouton pour soumettre votre réponse"
+            tabIndex="0"
+          >
+            Submit
+          </button>
+        </form>
+      ) : (
+        <div tabIndex="0">{checkCorrectAnswer()}</div>
+      )}
     </div>
   );
 }

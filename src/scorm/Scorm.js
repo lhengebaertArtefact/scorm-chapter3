@@ -17,6 +17,15 @@ let Scorm = {
     SCORM.set("cmi.interactions." + nextIndex + ".result", correct);
   },
 
+  setSuspendData(data) {
+    SCORM.set("cmi.suspend_data", JSON.stringify(data));
+  },
+
+  getSuspendData() {
+    const data = SCORM.get("cmi.suspend_data");
+    return data ? JSON.parse(data) : null;
+  },
+
   finish() {
     console.log("you have finished!");
     SCORM.set("cmi.core.lesson_status", "completed");
