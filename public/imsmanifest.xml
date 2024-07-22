@@ -1,40 +1,86 @@
-<?xml version="1.0" standalone="no" ?>
-<!--
-Single SCO with basic runtime calls. SCORM 1.2.
+<?xml version="1.0"  encoding="UTF-8"?>
+<!--  
+Manifest template to demonstrate the proper XML namespace declarations for
+SCORM 1.2 manifests. 
 
-Provided by Rustici Software - http://www.scorm.com
-
-This example demonstrates the use of basic runtime calls in a multi-page SCO. It
-includes a demonstration of bookmarking, status reporting (completion and success),
-score and time. It also includes the addition of a basic "controller" for providing
-intra-SCO navigation.
--->
-
-<manifest identifier="com.scorm.golfsamples.runtime.basicruntime.12" version="1"
-         xmlns="http://www.imsproject.org/xsd/imscp_rootv1p1p2"
-         xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_rootv1p2"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://www.imsproject.org/xsd/imscp_rootv1p1p2 imscp_rootv1p1p2.xsd
-                             http://www.imsglobal.org/xsd/imsmd_rootv1p2p1 imsmd_rootv1p2p1.xsd
-                             http://www.adlnet.org/xsd/adlcp_rootv1p2 adlcp_rootv1p2.xsd">
-
-  <metadata>
-    <schema>ADL SCORM</schema>
-    <schemaversion>1.2</schemaversion>
-  </metadata>
-	<organizations default="Simon Date">
-		<organization identifier="Simon Date">
-			<title>Create-react-scorm-app</title>
-			<item identifier="item_1" identifierref="resource_1">
-				<title>Create-react-scorm-app</title>
-			</item>
-		</organization>
-	</organizations>
-	<resources>
-		<resource identifier="resource_1" type="webcontent" adlcp:scormtype="sco" href="./index.html">
-      <file href="game/index.html"/>
-      <file href="game/index.js"/>
-      <file href="game/stylesheet.css"/>
-		</resource>
-	</resources>
+Provided by Rustici Software - www.scorm.com.
+ -->
+<manifest xmlns="http://www.imsproject.org/xsd/imscp_rootv1p1p2" xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_rootv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" identifier="com.scorm.manifesttemplates.scorm12" version="1" xsi:schemaLocation="http://www.imsproject.org/xsd/imscp_rootv1p1p2 imscp_rootv1p1p2.xsd http://www.imsglobal.org/xsd/imsmd_rootv1p2p1 imsmd_rootv1p2p1.xsd http://www.adlnet.org/xsd/adlcp_rootv1p2 adlcp_rootv1p2.xsd">
+<metadata>
+<schema>ADL SCORM</schema>
+<schemaversion>1.2</schemaversion>
+</metadata>
+<organizations default="org1">
+    <organization identifier="org1">
+      <title>Generative AI Training</title>
+      <item identifier="item1" identifierref="res_chat_quiz_1">
+        <title>Chat Quiz 1</title>
+        <imsss:sequencing>
+          <imsss:objectives>
+            <imsss:primaryObjective objectiveID="objective_1">
+              <imsss:mapInfo targetObjectiveID="global_objective_1" readSatisfiedStatus="true" writeSatisfiedStatus="true"/>
+            </imsss:primaryObjective>
+          </imsss:objectives>
+        </imsss:sequencing>
+      </item>
+      <item identifier="item2" identifierref="res_video_1">
+        <title>Video 1</title>
+        <imsss:sequencing>
+          <imsss:objectives>
+            <imsss:primaryObjective objectiveID="objective_2">
+              <imsss:mapInfo targetObjectiveID="global_objective_2" readSatisfiedStatus="true" writeSatisfiedStatus="true"/>
+            </imsss:primaryObjective>
+          </imsss:objectives>
+        </imsss:sequencing>
+      </item>
+      <item identifier="item3" identifierref="res_game_1">
+        <title>Do/Don't Game</title>
+        <imsss:sequencing>
+          <imsss:objectives>
+            <imsss:primaryObjective objectiveID="objective_3">
+              <imsss:mapInfo targetObjectiveID="global_objective_3" readSatisfiedStatus="true" writeSatisfiedStatus="true"/>
+            </imsss:primaryObjective>
+          </imsss:objectives>
+        </imsss:sequencing>
+      </item>
+      <item identifier="item4" identifierref="res_resources">
+        <title>Resources</title>
+        <imsss:sequencing>
+          <imsss:objectives>
+            <imsss:primaryObjective objectiveID="objective_4">
+              <imsss:mapInfo targetObjectiveID="global_objective_4" readSatisfiedStatus="true" writeSatisfiedStatus="true"/>
+            </imsss:primaryObjective>
+          </imsss:objectives>
+        </imsss:sequencing>
+      </item>
+      <item identifier="item5" identifierref="res_final_quiz">
+        <title>Final Quiz</title>
+        <imsss:sequencing>
+          <imsss:objectives>
+            <imsss:primaryObjective objectiveID="objective_5">
+              <imsss:mapInfo targetObjectiveID="global_objective_5" readSatisfiedStatus="true" writeSatisfiedStatus="true"/>
+            </imsss:primaryObjective>
+          </imsss:objectives>
+        </imsss:sequencing>
+      </item>
+    </organization>
+  </organizations>
+  <resources>
+    <resource identifier="res_chat_quiz_1" type="webcontent" adlcp:scormtype="sco" href="./index.html?objective=1">
+      <file href="./index.html"/>
+    </resource>
+    <resource identifier="res_video_1" type="webcontent" adlcp:scormtype="sco" href="./index.html?objective=2">
+      <file href="./index.html"/>
+    </resource>
+    <resource identifier="res_game_1" type="webcontent" adlcp:scormtype="sco" href="./index.html?objective=3">
+      <file href="./index.html"/>
+    </resource>
+    <resource identifier="res_resources" type="webcontent" adlcp:scormtype="sco" href="./index.html?objective=4">
+      <file href="./index.html"/>
+    </resource>
+    <resource identifier="res_final_quiz" type="webcontent" adlcp:scormtype="sco" href="./index.html?objective=5">
+      <file href="./index.html"/>
+    </resource>
+  </resources>
 </manifest>
+
