@@ -19,10 +19,10 @@ function App() {
   const [completedObjectives, setCompletedObjectives] = useState([]);
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const objectiveId = searchParams.get("objective");
+  const objectiveId = searchParams.get("step");
 
   const objectives = {
-    1: {
+    chat_quiz_1: {
       questions: [
         {
           question: "What is 10*10?",
@@ -47,11 +47,11 @@ function App() {
         },
       ],
     },
-    2: {
+    video_1: {
       type: "video",
       src: "path_to_video_1.mp4",
     },
-    3: {
+    game_1: {
       type: "game",
       questions: [
         {
@@ -76,11 +76,11 @@ function App() {
         },
       ],
     },
-    4: {
+    resources: {
       type: "resources",
       content: "Additional resources content",
     },
-    5: {
+    final_quiz: {
       questions: [
         {
           question: "Final question 1?",
@@ -147,7 +147,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    // Vérifiez le statut de chaque objectif et mettez à jour completedObjectives
+    // Vérifie le statut de chaque objectif et met à jour completedObjectives
     const objectivesStatus = Object.keys(objectives).map(
       (objectiveId, index) => {
         const status = Scorm.getObjectiveStatus(index);
@@ -191,7 +191,6 @@ function App() {
   );
 
   const completeObjective = useCallback(() => {
-    console.log("Completing objective:", objectiveId);
     const correctAnswers = assessment.filter(
       (answer) => answer === true
     ).length;
@@ -200,15 +199,16 @@ function App() {
     const scoreScaled = correctAnswers / totalQuestionsAnswered;
     Scorm.setScore(scorePercent, 100, 0, scoreScaled);
 
-    // Mettre à jour l'état local
     setCompletedObjectives((prevCompleted) => [...prevCompleted, objectiveId]);
-
-    // Mettre à jour le LMS
-    Scorm.setObjectiveStatus(objectiveId, "completed");
-
     Scorm.setSuspendData({
       completedObjectives: [...completedObjectives, objectiveId],
     });
+
+    // Marque l'objectif comme "completed"
+    const objectiveIndex = Object.keys(objectives).indexOf(objectiveId);
+    console.log("Objective index:", objectiveIndex);
+
+    Scorm.setObjectiveStatus(objectiveIndex, "completed");
 
     setCurrentQuestionIndex(0);
     setAssessment([]);
@@ -307,43 +307,43 @@ function App() {
         <h1>Bienvenue sur le cours</h1>
         <ProgressBar progress={progress} />
         <button
-          onClick={() => navigate("/?objective=1")}
-          disabled={completedObjectives.includes("1")}
+          onClick={() => navigate("/?step=chat_quiz_1")}
+          disabled={completedObjectives.includes("chat_quiz_1")}
         >
           Commencer le premier objectif
         </button>
         <button
-          onClick={() => navigate("/?objective=2")}
+          onClick={() => navigate("/?step=video_1")}
           disabled={
-            !completedObjectives.includes("1") ||
-            completedObjectives.includes("2")
+            !completedObjectives.includes("chat_quiz_1") ||
+            completedObjectives.includes("video_1")
           }
         >
           Commencer le second objectif
         </button>
         <button
-          onClick={() => navigate("/?objective=3")}
+          onClick={() => navigate("/?step=game_1")}
           disabled={
-            !completedObjectives.includes("2") ||
-            completedObjectives.includes("3")
+            !completedObjectives.includes("video_1") ||
+            completedObjectives.includes("game_1")
           }
         >
           Commencer le troisième objectif
         </button>
         <button
-          onClick={() => navigate("/?objective=4")}
+          onClick={() => navigate("/?step=resources")}
           disabled={
-            !completedObjectives.includes("3") ||
-            completedObjectives.includes("4")
+            !completedObjectives.includes("game_1") ||
+            completedObjectives.includes("resources")
           }
         >
           Accéder aux ressources
         </button>
         <button
-          onClick={() => navigate("/?objective=5")}
+          onClick={() => navigate("/?step=final_quiz")}
           disabled={
-            !completedObjectives.includes("4") ||
-            completedObjectives.includes("5")
+            !completedObjectives.includes("resources") ||
+            completedObjectives.includes("final_quiz")
           }
         >
           Commencer le quiz final
