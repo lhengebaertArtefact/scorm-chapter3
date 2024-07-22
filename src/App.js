@@ -32,7 +32,7 @@ function App() {
         {
           question: "What is the capital of Spain?",
           correctAnswer: 2,
-          answers: ["Barcelona", "Lisbon", "Madrid"],
+          answers: ["Barcelona", "Sevilla", "Madrid"],
         },
         {
           question:
